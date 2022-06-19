@@ -10,7 +10,7 @@ connections:
       headers:
         Authorization: "Token o6H9vk5WC9lL1IF2RQWFaKqVZj7LWxwg"
 pages:
-  - id: welcome-2
+  - id: remixable-godot-engine-tools-non-copyleft
     type: PageHeaderMenu
     requests:
       - id: get_rows
