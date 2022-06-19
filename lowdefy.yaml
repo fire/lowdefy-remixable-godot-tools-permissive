@@ -2,50 +2,38 @@
 lowdefy: 3.23.3
 name: Lowdefy starter
 
-pages:
-  - id: welcome
-    type: PageHeaderMenu
+connections:
+  - id: base_chibifire_com
+    type: AxiosHttp
     properties:
-      title: Welcome
-    areas:
-      content:
-        justify: center
-        blocks:
-          - id: content_card
-            type: Card
-            style:
-              maxWidth: 800
-            blocks:
-              - id: content
-                type: Result
-                properties:
-                  title: Welcome to your Lowdefy app
-                  subTitle: We are excited to see what you are going to build
-                  icon:
-                    name: HeartTwoTone
-                    color: '#f00'
-                areas:
-                  extra:
-                    blocks:
-                      - id: docs_button
-                        type: Button
-                        properties:
-                          size: large
-                          title: Let's build something
-                          color: '#1890ff'
-                        events:
-                          onClick:
-                            - id: link_to_docs
-                              type: Link
-                              params:
-                                url: https://docs.lowdefy.com
-                                newTab: true
-      footer:
-        blocks:
-          - id: footer
-            type: Paragraph
-            properties:
-              type: secondary
-              content: |
-                Made by a Lowdefy 🤖
+      baseURL:  https://base.chibifire.com/api
+      headers:
+        Authorization: "Token o6H9vk5WC9lL1IF2RQWFaKqVZj7LWxwg"
+pages:
+  - id: welcome-2
+    type: PageHeaderMenu
+    requests:
+      - id: get_rows
+        type: AxiosHttp
+        connectionId: base_chibifire_com
+        properties:
+          url: /database/rows/table/889/?user_field_names=true
+    events:
+      onEnter:
+        - id: fetch_get_posts
+          type: Request
+          params: get_rows
+    blocks:
+      - id: rest_data
+        type: Markdown
+        properties:
+          content:
+            _string.concat:
+              - |
+                ```yaml
+              - _yaml.stringify:
+                  - _log:
+                      _request: get_rows
+              - |
+                ```
 
